@@ -1,0 +1,68 @@
+#include <iostream>
+
+using namespace std;
+
+class Bibliotec
+{
+	string rAuthor;
+  string* Books;
+	int sizeB, capacityBooks;
+public:
+	Bibliotec(string Author) {
+		rAuthor = Author;
+		capacityBooks = 2;
+		Books = new string[capacityBooks];
+		sizeB = 0;
+	};
+
+	~Bibliotec() {
+		Books = nullptr;
+		delete Books;
+	};
+	void reName(string Author) {rAuthor = Author;}
+
+	void addBook(const string &bookd) {
+		if (sizeB >= capacityBooks) {
+			capacityBooks = capacityBooks * 2;
+			string* BooksB= new string[capacityBooks];
+			for (int i = 0; i < capacityBooks / 2; i++) { BooksB[i] = Books[i];}
+			this->Books = BooksB;
+		}
+		  Books[sizeB] = bookd;
+ 		  sizeB++;
+	    }
+
+	void printInfo()const {
+		cout << rAuthor<<": ";
+		for (int i = 0; i < sizeB;i++) { cout << Books[i] << " ";}
+		cout << endl;
+	}
+
+	Bibliotec & operator=(const Bibliotec& klass) {
+		if (this != &klass) {
+			 rAuthor= klass.rAuthor;
+			 Books= klass.Books;
+			 sizeB = klass.sizeB;
+			 capacityBooks= klass.capacityBooks;
+		}
+		return *this;
+	}
+};
+
+int main24() {
+	Bibliotec BoockA("Shecspire");
+	BoockA.addBook("Macbeth");
+	BoockA.addBook("Hamlet");
+	BoockA.addBook("Othello");
+	BoockA.printInfo();
+  Bibliotec BoockB(BoockA);
+	BoockB.reName("Bacon");
+	BoockB.addBook("Pericles");
+	BoockB.addBook("Tempest");
+	BoockB.printInfo();
+	BoockA = BoockB = BoockB;
+	BoockA.reName("Shecspire");
+	BoockA.printInfo();
+	BoockB.printInfo();
+	return 0;
+}
