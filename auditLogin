@@ -1,0 +1,104 @@
+
+
+#include <iostream>
+
+using namespace std;
+
+int charToint(char c) {
+	return static_cast<int>(c) - 48;
+}
+
+void printBlend(char q[]) {
+	cout << q << endl;
+}
+
+bool LenghtPass(char* pss, int lenMin) {
+	if (lenght(pss) < lenMin) { printBlend("To Short"); return false; }
+	return true;
+}
+
+int compare(const void *a, const void *b)
+{ return *(const char *)a - *(const char *)b;}
+
+
+bool RezusPass(char* pss, int lenMin) {
+	int de = 0;
+	char* e = pss;
+	int len = lenght(pss);
+	char arr[100];
+	for (int i = 0; i < len; i++) {
+		arr[i] = pss[i];
+	}
+	arr[len] = 0;
+	qsort(arr, strlen(arr), 1, compare);
+	e = pss;
+	for (int i = 0; i < len -1; i++) {
+		if (arr[i] == arr[i + 1]) { de++; }
+	}
+	if (len - de < lenMin) { printBlend("To few diferent chrakteristic"); return false; }
+	return true;
+}
+bool isNumber(char* pss, int Min) {
+	int iC = 0;
+	char* e = pss;
+	while (*e) {
+		if (charToint(*e) >= 0 && charToint(*e) <= 9) {iC++;}
+		*e++;
+	}
+	if(iC<Min) { printBlend("No Digit"); return false; }
+	return true;
+}
+bool isBigLeters(char* pss, int Min) {
+	int iC = 0;
+	char* e = pss;
+	while (*e) {
+		if (isLeters(*e,true)) { iC++; }
+		*e++;
+	}
+	if (iC<Min) { printBlend("No big letter"); return false; }
+	return true;
+}
+bool isLitleLeters(char* pss, int Min) {
+	int iC = 0;
+	char* e = pss;
+	while (*e) {
+		if (isLeters(*e,false)) { iC++; }
+		*e++;
+	}
+	if (iC<Min) { printBlend("No litl letter"); return false; }
+	return true;
+}
+
+bool isNoLeters(char* pss, int Min) {
+	int iC = 0;
+	char* e = pss;
+	while (*e) {
+		int tt = *e;
+		if ((tt >= 33 && tt <= 47) || (tt>=58 && tt <= 66) || (tt >= 91 && tt <= 96) || (tt >= 58 && tt <= 66)){ iC++; }
+		*e++;
+	}
+	if (iC<Min) { printBlend("No znak"); return false; }
+	return true;
+}
+
+bool checkpass(char* pss) {
+	bool isblend[6];
+	isblend[0] = LenghtPass(pss, 8);
+	isblend[1] = RezusPass(pss, 6);
+	isblend[2] = isNumber(pss, 1);
+	isblend[3] = isBigLeters(pss, 1);
+	isblend[4] = isLitleLeters(pss, 1);
+	isblend[5] = isNoLeters(pss, 1);
+	return isblend[0] && isblend[1] && isblend[2] && isblend[3] && isblend[4] && isblend[5] ;
+}
+
+int main12()
+{
+	char* pss[] = {"AbcDe93","A1b:A1b","A1b:Acb","abc123","Zorro@123",nullptr};
+	for (int i = 0; pss[i] != nullptr; i++) {
+		cout << "checking " << pss[i] << endl;
+		if (checkpass(pss[i])) { cout << "Ok"; }
+		cout << endl;
+	}
+	return 0;
+}
