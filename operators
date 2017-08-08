@@ -1,0 +1,56 @@
+
+#include <cmath>
+#include <iostream>
+
+using namespace std;
+
+class Vector {
+	double x, y,z;
+public:
+	Vector() {
+
+	}
+	Vector(double x, double y, double z) {
+		this->x = x;
+		this->y = y;
+		this->z = z;
+	}
+	~Vector() {}
+	Vector operator-()const{
+		return Vector(x*-1, y*-1, z*-1);
+	}
+	Vector operator*(double a)const {
+		return Vector(x*a, y*a, z*a);
+	}
+	friend Vector operator+(Vector &v1, Vector &v2) {
+		return Vector(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+	}
+	friend Vector operator-(const Vector &v1, const Vector &v2) {
+		return Vector(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
+	}
+
+	
+	static double modulVector(const Vector &v1) {
+		return sqrt(v1.x*v1.x + v1.y*v1.y + v1.z*v1.z);
+	}
+	friend double operator*(const Vector &v1,const Vector &v2) {
+		return modulVector(v1)*modulVector(v2);
+	}
+
+	friend Vector operator*(double a, Vector &v1) {
+		return Vector(v1.x*a, v1.y*a, v1.z*a);
+	}
+	
+	friend ostream& operator <<(ostream &s, const  Vector &w) {
+		s <<  " [ " << w.x << ", " << w.y << ", " << w.z << " ]";
+		return s;
+	}
+};
+
+int main30(){
+	Vector v1(1, 1, 1), v2(2, 2, 2), v3(1,2, 1);
+	Vector vect = -(v1 + v2 -v3);
+	Vector v = 2 * vect + v1 * 2;
+	cout << v << " " << v << " " << vect*v << endl;
+	return 0;
+}
