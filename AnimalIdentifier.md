@@ -1,4 +1,4 @@
-"
+<
 #include <iostream>
 #include <string>
 using namespace std;
@@ -13,7 +13,7 @@ public:
 	string getSpec() const { return  Type; }
 	virtual int leng()const = 0;
 	virtual string lvoice()const = 0;
-"
+
 protected:
 	string Type, name;
 	friend ostream& operator <<(ostream &s, const  Animal &k) {
@@ -50,3 +50,4 @@ int main34() {
 	for (const auto& e : mm)cout << e << endl;
 	return 0;
 }
+>
