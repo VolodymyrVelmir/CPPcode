@@ -1,0 +1,53 @@
+#include <iostream>
+
+using namespace std;
+
+enum Banks { PKO, BGZ, BRE, BPH };
+struct Account {
+	Banks bank;
+	int Balance;
+};
+struct Person {
+	char name[20];
+	Account  user;
+};
+struct Couple {
+	Person he;
+	Person she;
+};
+
+Couple* bestK(Couple* cpls, int s, Banks bank) {
+	int buferIndex = -1,MoneyMax=0,m=0;
+	for (int i = 0; i<s; i++){
+		if (cpls[i].he.user.bank == bank || cpls[i].she.user.bank == bank) {
+			MoneyMax= cpls[i].he.user.Balance + cpls[i].she.user.Balance;
+			m = i;
+			break;	
+		}
+	}
+	if (MoneyMax != 0) {
+		for (int i = m; i < s; i++) {
+			if (cpls[i].he.user.bank == bank || cpls[i].she.user.bank == bank) {
+				if (MoneyMax <= cpls[i].he.user.Balance + cpls[i].she.user.Balance) {
+					buferIndex = i;
+				}
+			}
+		}
+		if (buferIndex == -1) { return nullptr; }
+		else { return &cpls[buferIndex]; }
+	}else {
+		return nullptr;
+	}
+}
+
+int main20(){
+Couple q[] = {
+		{ { "John",{ PKO,1200 } },{ "Mary",{ BGZ,1500 } } },
+		{ { "Peter",{ BGZ,1400 } },{ "Suzy",{ BRE,1300 } } },
+		{ { "Kevin",{ PKO,1600 } },{ "Kty",{ BPH,1500 } } },
+		{ { "Kenny",{ BPH,1800 } },{ "Lucy",{ BRE,1700 } } }
+};
+Couple * p = bestK(q, 4, BGZ);
+cout << p->he.name<<" & " <<p->she.name<<" : "<< p->he.user.Balance + p->she.user.Balance << endl;
+return 0;
+}
