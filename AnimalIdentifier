@@ -39,14 +39,11 @@ public:
 };
 
 int main34() {
-
 	Cat cat1("Oliwer"), cat2("shopi");
 	Snake snak1("wife");
-
 	Animal* mm[] = {&cat1,&cat2,&snak1};
 	for (const auto& e : mm)cout << *e << endl;
 	cout  << endl;
 	for (const auto& e : mm)cout << e << endl;
 	return 0;
-
 }
