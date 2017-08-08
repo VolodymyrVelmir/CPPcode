@@ -1,0 +1,96 @@
+#include <iostream>
+
+using namespace std;
+
+int NodeS = 0;
+ 
+struct Node {
+	int data;
+	Node *nextNode;
+};
+ 
+Node * remuveOdd(Node* root) {
+	Node* Perent=new Node();
+	Perent->nextNode = root;
+	Node* RootNode = Perent->nextNode;
+	Node* Memory = Perent;
+	bool b = true;
+	int vI = 0, v = 0;
+	while (b) {
+		if (RootNode == nullptr) {
+			b = false;
+		}
+		else {
+			v++;
+			if (RootNode->data % 2) {
+				vI++;
+				NodeS--;
+				cout << "DEL:" << RootNode->data << " ";
+				Perent->nextNode = RootNode->nextNode;
+			}
+			Perent = RootNode;
+			RootNode = RootNode->nextNode;
+		}
+	}
+	cout << endl;
+	if (vI == v) { return nullptr; }
+	return  Memory->nextNode;
+}
+
+
+void showList(const Node* root) {
+	if (NodeS > 0) {
+		const Node* RootNode = root;
+		bool b = true;
+		int e = 0;
+		while (b) {
+			if (RootNode == nullptr) { b = false; }
+			else {
+				e++;
+				cout << RootNode->data << " ";
+				RootNode = RootNode->nextNode;
+			}
+		}
+		cout << endl;
+	}else {
+		cout <<"empty"<< endl;
+	}
+}
+
+Node * arryToList(const int m[], size_t s) {
+	Node* RootNode = new Node();
+	Node* NodeA = RootNode;
+	Node* bbb;
+	RootNode->data = m[0];
+	for (int i = 1; i < s; i++) {
+		bbb=new Node();
+		NodeS++;
+		RootNode->nextNode = bbb;
+		RootNode = bbb;
+		RootNode->data = m[i];
+	}
+	return NodeA;
+}
+
+void deletList(Node* root) {
+	if (root->nextNode != nullptr) {
+		deletList(root->nextNode);
+	 }
+	NodeS--;
+	cout << "Del:" << root->data << " ";;
+	delete root;
+
+}
+
+int main21() {
+	int m[] = { 1,2,3,4,5,6 };
+	size_t s = sizeof(m) / sizeof(m[0]);
+	Node * head = arryToList(m, s);
+	showList(head);
+	head = remuveOdd(head);
+	showList(head);
+	deletList(head);
+	cout << endl;
+	showList(head);
+	return 0;
+}
