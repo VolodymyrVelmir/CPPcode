@@ -23,25 +23,21 @@ public:
 		sizeName = k.sizeName; 
 		R = k.R; G = k.G; B = k.B;
 	}
-
 	~Color() {
 		name = nullptr;
 		delete name;
 	}
- 
 	friend ostream& operator <<(ostream &s, const  Color &k) {
 	 	s << k.name  << " [ " << k.R << ", " << k.G << ", " << k.B << " ]";
 	 	return s;
 	}
-
 	Color operator =(const Color& k) {
 			name = k.name;
 			sizeName = k.sizeName;
 			R = k.R; G = k.G; B = k.B;
 		return  *this;
 	}
-
-
+	
 	Color operator -(){
 		char* qq = new char[sizeName+1];
 		for (int i = sizeName; i >=0; i--) {  qq[i + 1] = name[i]; }
