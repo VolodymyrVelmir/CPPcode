@@ -1,0 +1,55 @@
+
+
+#include <iostream>
+
+using namespace std;
+
+int daablElement(char* words, int stLoc) {
+	int iE = 0;
+	char* e = words + stLoc;
+	bool b = true;
+	while (b) {
+		if (*e = ' ') { iE++; b = false; }
+		*e++;
+		if (!*e) { b = false; }
+	}
+	return iE;
+}
+
+void claerSpacer(char* words) {
+	int s = lenght(words);
+	bool b = true, b2 = false;
+	int dE = 0;
+	char* ff = new char[s];
+	for (int i = 0; i < s; i++) {
+		if (words[i] != ' ') {
+			b = true; ff[dE] = words[i]; dE++; b2 = true;
+		}
+		else if (b && b2) {
+			b = false; ff[dE] = ' '; dE++;
+		}
+		words[i] = 0;
+	}
+	ff[dE] = 0;
+	for (int i = 0; i < dE; i++) {
+		words[i] = ff[i];
+		ff[i] = 0;
+	}
+	words[dE] = 0;
+}
+int main10()
+{
+	char n1[] = "a   bc def   ghijk"; 
+	cout << "Przed: >" << n1 << "<" << endl;
+	claerSpacer(n1);
+	cout << "Po: >" << n1 << "<" << endl;
+	char n2[] = "  a   bc def    ghijk ";
+	cout << "Przed: >" << n2 << "<" << endl;
+	claerSpacer(n2);
+	cout << "Po: >" << n2 << "<" << endl;
+	char n3[] = "   ";
+	cout << "Przed: >" << n3 << "<" << endl;
+	claerSpacer(n3);
+	cout << "Po: >" << n3 << "<" << endl;
+	return 0;
+}
