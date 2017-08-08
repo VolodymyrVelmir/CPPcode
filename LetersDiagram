@@ -1,0 +1,89 @@
+#include <iostream>
+
+using namespace std;
+class Leters {
+	int LetterSize = 26;
+	int letters[26]{ 0 };
+	int maxindex = 0;
+public:
+	Leters(const char* text) {
+	    for(int i=0; i<lenght(text);i++){
+			addLeters(&text[i]);
+		}
+
+	}
+	~Leters() {
+		for each (int i in letters) { i = 0;}
+		maxindex = 0; 
+	}
+  
+	bool addLeters(const char* e) {
+		int key = static_cast<int>(*e);
+		if ((key>=65 && key<=90)||(key>=97 && key<=122)) {
+			if (key >= 97 && key <= 122) { key -= 32; }
+			    key -= 65;
+				letters[key]++;
+				return true;
+		}
+		return false;
+	}
+
+	void printFrequence() {
+		int ff[26];
+		int max = getMaxElement();
+		for(int i=0;i<LetterSize; i++){
+		ff[i] = max-letters[i];
+		}
+		
+		for (int y = 0; y < max+1; y++) {
+			if (y < max) {
+				for (int x = 0; x < LetterSize; x++) {
+					if (ff[x] > 0) { ff[x] --; cout << "  "; }
+					else { cout << "* "; }
+				}
+			}else {
+				for (int x = 0; x < LetterSize; x++) {
+					 cout << (char)('A'+x)<<" "; 
+				}
+			}
+			cout << endl;
+		}
+	};
+  
+	int getMaxElement() {
+		int max = 0;
+		for (int i = 0; i<LetterSize; i++) {
+			if (max < letters[i]) {
+				max = letters[i];  maxindex = i; 
+			}
+		}
+		return max;
+	}
+
+	char getMostFrequent() { 
+		getMaxElement();
+		return 'A'+ maxindex; };
+
+	int numOfDifferent() { 
+		int v = 0;
+		for (int i = 0; i<LetterSize; i++)
+			if (letters[i]) {v++;}
+		return v;
+	}; 
+};
+
+int main13()
+{
+	const char* text =
+		"To be,or not to be- thaat is the questiona\n:"
+		"Whether 'tis noble in the mind to duffer\n:"
+		"The slings and arrows of outrageous fortune\n:"
+		"Or to take arms aagainst a sea of troubles,\n:"
+		"And by opposing end them.\n:";
+	Leters lett(text);
+	cout << "Most frequent letter: " << lett.getMostFrequent() << endl;
+	cout << "Number of different letters: " << lett.numOfDifferent() << endl;
+	cout << "Frequence table: " << endl;
+	lett.printFrequence();
+	return 0;
+}
