@@ -1,0 +1,80 @@
+#include <iostream>
+#include <string>
+using namespace std;
+ 
+class Color {
+	char* name;
+	int R, G, B, sizeName;
+public:
+	Color(char* name, int R, int G, int B) {
+		sizeName = 0; 
+		for (int i = 0; i < 100; i++) { if (!name[i])break;
+			sizeName++;
+		} 
+		sizeName = sizeName;   //deBug
+		this->name = new char(sizeName);
+		this->name = name;
+		this->R = ColotTransform(R);
+		this->G = ColotTransform(G);
+		this->B = ColotTransform(B);
+	}
+	Color(Color& k) {
+		name = k.name;
+		sizeName = k.sizeName; 
+		R = k.R; G = k.G; B = k.B;
+	}
+
+	~Color() {
+		name = nullptr;
+		delete name;
+	}
+ 
+	friend ostream& operator <<(ostream &s, const  Color &k) {
+	 	s << k.name  << " [ " << k.R << ", " << k.G << ", " << k.B << " ]";
+	 	return s;
+	}
+
+	Color operator =(const Color& k) {
+			name = k.name;
+			sizeName = k.sizeName;
+			R = k.R; G = k.G; B = k.B;
+		return  *this;
+	}
+
+
+	Color operator -(){
+		char* qq = new char[sizeName+1];
+		for (int i = sizeName; i >=0; i--) {  qq[i + 1] = name[i]; }
+		qq[0] = '!'; sizeName++;
+		return  Color(qq, 255 - R, 255 - G, 255 - B);
+	}
+
+	 Color operator +(const Color& k ) const{
+	    int u2 = k.sizeName;
+		int u = u2 +sizeName+1;
+		char* ff = new char(u);
+		for (int i = 0; i < u; i++) {
+			if (i < u2) {          ff[i] = name[i];
+			}else if (i == u2) {   ff[i] = '+';
+			}else if (i > u2 ) {   ff[i] = k.name[i - (u2 + 1)];
+			}
+		}
+		return Color(ff, (R + k.R) / 2, (G + k.G) / 2, (B + k.B) / 2);
+	}
+	int ColotTransform(int e) {
+		if (e > 255) { e = 255;
+		}else if ((e < 0)) {e = 0; }
+		return e;
+	}
+ };
+ 
+int main29() {
+	Color* c1=new Color ("Back", 255, 0, 0);
+	Color c2(*c1);
+	delete c1;
+	Color c3 = c2 = c2;
+	c2 = -c3 +c2;
+	cout << c2 << endl;
+	cout << c3 << endl;
+	return 0;
+}
